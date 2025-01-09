@@ -9,17 +9,7 @@ from langchain_groq import ChatGroq
 from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 import chainlit as cl
 
-# for chainlit, .env is loaded automatically
-# from dotenv import load_dotenv
-# load_dotenv()  #
-# groq_api_key = os.environ['GROQ_API_KEY']
-
-llm_local = ChatOllama(model="mistral:instruct")
-llm_groq = ChatGroq(
-            #groq_api_key=groq_api_key,
-            model_name='llama3.2:1b' 
-            #model_name='mixtral-8x7b-32768'
-    )
+llm_local = ChatOllama(model_name='llama3.2:1b' )
 
 @cl.on_chat_start
 async def on_chat_start():
@@ -30,7 +20,7 @@ async def on_chat_start():
     while files is None:
         files = await cl.AskFileMessage(
             content="Please upload a pdf file to begin!",
-            accept=["application/pdf"],
+            accept={"application/pdf" : [".pdf"]},
             max_size_mb=100,
             timeout=180, 
         ).send()
@@ -57,7 +47,6 @@ async def on_chat_start():
 
     # Create a Chroma vector store
     embeddings = OllamaEmbeddings(model="nomic-embed-text")
-    #embeddings = OllamaEmbeddings(model="llama2:7b")
     docsearch = await cl.make_async(Chroma.from_texts)(
         texts, embeddings, metadatas=metadatas
     )
