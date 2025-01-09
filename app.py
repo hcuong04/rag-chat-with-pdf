@@ -1,4 +1,5 @@
 import PyPDF2
+#import os
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
@@ -9,15 +10,15 @@ from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 import chainlit as cl
 
 # for chainlit, .env is loaded automatically
-#from dotenv import load_dotenv
-#load_dotenv()  #
-#groq_api_key = os.environ['GROQ_API_KEY']
+# from dotenv import load_dotenv
+# load_dotenv()  #
+# groq_api_key = os.environ['GROQ_API_KEY']
 
 llm_local = ChatOllama(model="mistral:instruct")
 llm_groq = ChatGroq(
             #groq_api_key=groq_api_key,
-            #model_name='llama2-70b-4096' 
-            model_name='mixtral-8x7b-32768'
+            model_name='llama3.2:1b' 
+            #model_name='mixtral-8x7b-32768'
     )
 
 @cl.on_chat_start
