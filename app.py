@@ -1,15 +1,16 @@
 import PyPDF2
 #import os
-from langchain_community.embeddings import OllamaEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain.chains import ConversationalRetrievalChain
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_groq import ChatGroq
 from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 import chainlit as cl
 
-llm_local = ChatOllama(model_name='llama3.2:1b' )
+llm_local = ChatOllama(model="llama3.2:1b", base_url="http://127.0.0.1:11434")
+#llm_local = ChatOllama(model_name='llama3.2:1b', base_url="http://localhost:8000")
 
 @cl.on_chat_start
 async def on_chat_start():
