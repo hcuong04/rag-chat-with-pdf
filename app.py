@@ -1,11 +1,10 @@
 import PyPDF2
-#import os
+from pathlib import Path
 from langchain_ollama import OllamaEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain.chains import ConversationalRetrievalChain
 from langchain_ollama import ChatOllama
-from langchain_groq import ChatGroq
 from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 import chainlit as cl
 
@@ -14,6 +13,19 @@ llm_local = ChatOllama(model="llama3.2:1b", base_url="http://127.0.0.1:11434")
 
 @cl.on_chat_start
 async def on_chat_start():
+    
+    language = "vi-VN"
+
+    root_path  = Path(__file__).parent
+    
+    translated_chainlit_md_path = root_path / f"chainlit_{language}.md"
+    default_chainlit_md_path = root_path / "chainlit.md"
+    if translated_chainlit_md_path.exists():
+        message = translated_chainlit_md_path.read_text()
+    else:
+        message = default_chainlit_md_path.read_text()
+    startup_message = cl.Message(content=message)
+    await startup_message.send()
     
     files = None #Initialize variable to store uploaded files
 
@@ -37,7 +49,6 @@ async def on_chat_start():
     pdf_text = ""
     for page in pdf.pages:
         pdf_text += page.extract_text()
-        
 
     # Split the text into chunks
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
