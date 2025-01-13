@@ -103,6 +103,19 @@ def setup_chain():
 
 @cl.on_chat_start
 async def on_chat_start():
+    language = "vi-VN"
+
+    root_path  = Path(__file__).parent
+    
+    translated_chainlit_md_path = root_path / f"chainlit_{language}.md"
+    default_chainlit_md_path = root_path / "chainlit.md"
+    if translated_chainlit_md_path.exists():
+        message = translated_chainlit_md_path.read_text()
+    else:
+        message = default_chainlit_md_path.read_text()
+    startup_message = cl.Message(content=message)
+    await startup_message.send()
+    
     """Handle the start of a new chat session."""
     metadata = load_metadata()
 

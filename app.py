@@ -1,200 +1,279 @@
 import os
-import hashlib
-import PyPDF2
+import json
 from pathlib import Path
+import pytesseract
+from PIL import Image
+from googletrans import Translator
+import PyPDF2
 from langchain_ollama import OllamaEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain.chains import ConversationalRetrievalChain
 from langchain_ollama import ChatOllama
-from langchain.memory import ChatMessageHistory, ConversationBufferMemory
+from langchain.memory import ConversationBufferMemory
 import chainlit as cl
-import json
-from chainlit.context import context_var, ChainlitContext, ChainlitContextException
 
 # Base paths
 BASE_DIR = Path(__file__).parent / ".files"
+CHATS_DIR = BASE_DIR / "chats"
 PDF_DIR = BASE_DIR / "pdf"
 CHUNKS_DIR = BASE_DIR / "chunks"
-SOURCE_DIR = BASE_DIR / "source"
 METADATA_FILE = BASE_DIR / "metadata.json"
 
-# Ensure necessary directories exist
+# Ensure directories exist
+CHATS_DIR.mkdir(parents=True, exist_ok=True)
 PDF_DIR.mkdir(parents=True, exist_ok=True)
 CHUNKS_DIR.mkdir(parents=True, exist_ok=True)
-SOURCE_DIR.mkdir(parents=True, exist_ok=True)
 
 # Initialize metadata
 if not METADATA_FILE.exists():
-    METADATA_FILE.write_text(json.dumps({"files": {}, "questions": {}}, indent=4))
+    METADATA_FILE.write_text(json.dumps({"files": {}, "chats": {}}, indent=4))
 
 # Load LLM
 llm_local = ChatOllama(model="llama3.2:1b", base_url="http://127.0.0.1:11434")
 
-def calculate_file_hash(file_path: Path) -> str:
-    """Calculate a unique hash for a file."""
-    hasher = hashlib.md5()
-    with file_path.open("rb") as f:
-        hasher.update(f.read())
-    return hasher.hexdigest()
+# Load metadata
+def load_metadata():
+    """Load metadata from file."""
+    with METADATA_FILE.open("r") as f:
+        return json.load(f)
 
-def save_metadata(metadata: dict):
-    """Save metadata to a JSON file."""
-    with open(METADATA_FILE, "w") as f:
+# save metadata
+def save_metadata(metadata):
+    """Save metadata to file."""
+    with METADATA_FILE.open("w") as f:
         json.dump(metadata, f, indent=4)
 
+# Create chat folder
+def ensure_chat_folder(metadata):
+    """Ensure the `chats` directory exists and create a new chat folder."""
+    chat_index = len(metadata["chats"]) + 1
+    chat_folder_name = f"chat_{chat_index}"
+    chat_folder = CHATS_DIR / chat_folder_name
+    chat_folder.mkdir(parents=True, exist_ok=True)
 
-def load_metadata() -> dict:
-    """Load metadata from a JSON file."""
-    if METADATA_FILE.exists():
-        with open(METADATA_FILE, "r") as f:
-            return json.load(f)
-    return {"files": {}, "questions": {}}
+    # Add chat entry to metadata
+    metadata["chats"][chat_index] = {"folder": str(chat_folder), "questions": []}
+    save_metadata(metadata)
+
+    return chat_index, chat_folder
+
+# extract text from pdf
+def extract_text_from_pdf(file_path):
+    """Extract text from PDF."""
+    pdf = PyPDF2.PdfReader(file_path)
+    return "".join(page.extract_text() for page in pdf.pages)
+
+# create chunks
+def create_chunks(filename, text):
+    """Split text into chunks and save them."""
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    texts = text_splitter.split_text(text)
+
+    chunk_files = []
+    for idx, chunk in enumerate(texts):
+        chunk_file = CHUNKS_DIR / f"chunk_{filename}_{idx}.txt"
+        chunk_file.write_text(chunk)
+        chunk_files.append(str(chunk_file))
+    return chunk_files
+
+# set up
+def setup_chain():
+    """Set up the retrieval chain using all available chunks."""
+    chunk_files = list(CHUNKS_DIR.glob("chunk_*.txt"))
+    chunk_texts = [chunk.read_text() for chunk in chunk_files]
+    metadatas = [{"source": str(chunk)} for chunk in chunk_files]
+
+    embeddings = OllamaEmbeddings(model="nomic-embed-text")
+    docsearch = Chroma.from_texts(chunk_texts, embeddings, metadatas=metadatas)
+
+    # Set the retriever to return up to 4 documents
+    retriever = docsearch.as_retriever(search_kwargs={"k": 4})
+
+    memory = ConversationBufferMemory(
+        memory_key="chat_history",
+        output_key="answer",
+        return_messages=True,
+    )
+
+    return ConversationalRetrievalChain.from_llm(
+        llm=llm_local,
+        retriever=retriever,
+        memory=memory,
+        return_source_documents=True,
+    )
 
 
 @cl.on_chat_start
 async def on_chat_start():
-    
-    language = "vi-VN"
-
-    root_path  = Path(__file__).parent
-    
-    translated_chainlit_md_path = root_path / f"chainlit_{language}.md"
-    default_chainlit_md_path = root_path / "chainlit.md"
-    if translated_chainlit_md_path.exists():
-        message = translated_chainlit_md_path.read_text()
-    else:
-        message = default_chainlit_md_path.read_text()
-    startup_message = cl.Message(content=message)
-    await startup_message.send()
-    
+    """Handle the start of a new chat session."""
     metadata = load_metadata()
 
-    # Wait for the user to upload a file
+    # Ensure chat folder structure and create a new chat folder
+    chat_index = len(metadata["chats"]) + 1
+    chat_folder_name = f"chat_{chat_index}"
+    chat_folder = CHATS_DIR / chat_folder_name
+
+    if not chat_folder.exists():  # Ensure no duplicate folders
+        chat_folder.mkdir(parents=True, exist_ok=True)
+
+    # Add chat entry to metadata if it doesn't exist
+    if chat_index not in metadata["chats"]:
+        metadata["chats"][chat_index] = {"folder": str(chat_folder), "questions": []}
+        save_metadata(metadata)
+
+    # Store in user session
+    cl.user_session.set("chat_index", chat_index)
+    cl.user_session.set("metadata", metadata)
+
+    await cl.Message(content=f"New chat started! Chat folder: `{chat_folder.name}`.").send()
+
+    # If no files are present, ask the user to upload a PDF
+    if not metadata["files"]:
+        await cl.Message(content="No files found. Please upload a PDF to start.").send()
+        await prompt_for_file(chat_index)
+    else:
+        # Set up the chain with all available chunks
+        cl.user_session.set("chain", setup_chain())
+        await cl.Message(content="You can start asking questions based on uploaded files.").send()
+
+# Function to handle image uploads and translate the text
+async def prompt_for_image_and_translate(chat_index):
+    """Prompt the user to upload an image and translate the text."""
     files = None
     while files is None:
         files = await cl.AskFileMessage(
-            content="Please upload a PDF file to begin!",
-            accept={"application/pdf": [".pdf"]},
-            max_size_mb=100,
+            content="Upload an image file (JPG, PNG):",
+            accept={"image/jpeg": [".jpg", ".jpeg"], "image/png": [".png"]},
+            max_size_mb=10,
             timeout=180,
         ).send()
 
     file = files[0]
     uploaded_file_path = PDF_DIR / file.name
 
-    # Move the uploaded file to the PDF directory
+    if uploaded_file_path.exists():
+        await cl.Message(content=f"Image `{file.name}` already exists. No need to re-upload.").send()
+        return
+
     os.rename(file.path, uploaded_file_path)
 
-    file_hash = calculate_file_hash(uploaded_file_path)
+    # Perform OCR on the image
+    try:
+        image = Image.open(uploaded_file_path)
+        extracted_text = pytesseract.image_to_string(image)
+    except Exception as e:
+        await cl.Message(content=f"Failed to process image `{file.name}`: {str(e)}").send()
+        return
 
-    if file_hash in metadata["files"]:
-        # File already processed
-        msg = cl.Message(content=f"File `{file.name}` is already processed. Reusing data...")
-        await msg.send()
-        setup_chain(metadata["files"][file_hash]["chunks"])
-    else:
-        # Process new file
-        msg = cl.Message(content=f"Processing `{file.name}`...")
-        await msg.send()
+    if not extracted_text.strip():
+        await cl.Message(content=f"No text detected in the image `{file.name}`.").send()
+        return
 
-        # Read the PDF file
-        pdf = PyPDF2.PdfReader(uploaded_file_path)
-        pdf_text = ""
-        for page in pdf.pages:
-            pdf_text += page.extract_text()
+    # Translate the extracted text
+    translator = Translator()
+    translated_text = translator.translate(extracted_text, dest="en").text
 
-        # Split the text into chunks
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-        texts = text_splitter.split_text(pdf_text)
+    # Save the extracted and translated text
+    metadata = cl.user_session.get("metadata")
+    chat_folder = Path(metadata["chats"][chat_index]["folder"])
+    extracted_file = chat_folder / f"extracted_text_{len(metadata['chats'][chat_index]['questions']) + 1}.txt"
+    translated_file = chat_folder / f"translated_text_{len(metadata['chats'][chat_index]['questions']) + 1}.txt"
 
-        # Create chunk files
-        chunk_files = []
-        for idx, chunk in enumerate(texts):
-            chunk_file = CHUNKS_DIR / f"chunk_{file_hash}_{idx}.txt"
-            chunk_file.write_text(chunk)
-            chunk_files.append(str(chunk_file))
+    extracted_file.write_text(extracted_text)
+    translated_file.write_text(translated_text)
 
-        # Update metadata
-        metadata["files"][file_hash] = {
-            "file_name": file.name,
-            "chunks": chunk_files,
-        }
-        save_metadata(metadata)
+    # Respond with the translated text
+    await cl.Message(
+        content=(
+            f"Image `{file.name}` processed successfully.\n\n"
+            f"**Extracted Text:**\n{extracted_text}\n\n"
+            f"**Translated Text:**\n{translated_text}"
+        )
+    ).send()
 
-        msg.content = f"Processing `{file.name}` completed. You can now ask questions!"
-        await msg.update()
-        setup_chain(chunk_files)
+async def prompt_for_file(chat_index):
+    """Prompt the user to upload a file and process it."""
+    # Ask the user to upload a file
+    files = None
+    while files is None:
+        files = await cl.AskFileMessage(
+            content="Upload a PDF file:",
+            accept={"application/pdf": [".pdf"]},
+            max_size_mb=100,
+            timeout=180,
+        ).send()
 
+    # Handle the uploaded file
+    file = files[0]
+    uploaded_file_path = PDF_DIR / file.name
 
-def setup_chain(chunk_files: list):
-    """Setup the conversational chain using chunk files."""
-    chunk_texts = [Path(chunk).read_text() for chunk in chunk_files]
-    metadatas = [{"source": f"{idx}"} for idx in range(len(chunk_texts))]
+    # Check if the file already exists
+    if uploaded_file_path.exists():
+        await cl.Message(content=f"File `{file.name}` already exists. No need to re-upload.").send()
+        return
 
-    # Create Chroma vector store
-    embeddings = OllamaEmbeddings(model="nomic-embed-text")
-    docsearch = Chroma.from_texts(chunk_texts, embeddings, metadatas=metadatas)
+    # Save the file
+    os.rename(file.path, uploaded_file_path)
 
-    # Memory for conversational context
-    message_history = ChatMessageHistory()
-    memory = ConversationBufferMemory(
-        memory_key="chat_history",
-        output_key="answer",
-        chat_memory=message_history,
-        return_messages=True,
-    )
+    # Extract and process the file content
+    pdf_text = extract_text_from_pdf(uploaded_file_path)
+    create_chunks(file.name, pdf_text)
 
-    # Conversational chain
-    chain = ConversationalRetrievalChain.from_llm(
-        llm=llm_local,
-        chain_type="stuff",
-        retriever=docsearch.as_retriever(),
-        memory=memory,
-        return_source_documents=True,
-    )
+    # Update metadata
+    metadata = cl.user_session.get("metadata")
+    metadata["files"][file.name] = {"file_name": file.name}
+    save_metadata(metadata)
 
-    cl.user_session.set("chain", chain)
+    # Inform the user
+    await cl.Message(content=f"File `{file.name}` uploaded and processed successfully.").send()
 
+    # Update the chain with the newly added file chunks
+    cl.user_session.set("chain", setup_chain())    
 
 @cl.on_message
 async def main(message: cl.Message):
-    chain = cl.user_session.get("chain")
-    cb = cl.AsyncLangchainCallbackHandler()
+    metadata = cl.user_session.get("metadata")
+    chat_index = cl.user_session.get("chat_index")
 
+    # Validate chat index
+    if not chat_index or chat_index not in metadata["chats"]:
+        await cl.Message(content="Error: Chat session not properly initialized.").send()
+        return
+
+    chain = cl.user_session.get("chain")
+    if not chain:
+        await cl.Message(content="No chain found. Please upload a file to continue.").send()
+        return
+
+    # Check for triggers for image upload and translation
+    if message.content.lower() in ["translate an image", "dịch ảnh"]:
+        await prompt_for_image_and_translate(chat_index)
+        return
+
+    # Regular query handling (existing functionality)
+    cb = cl.AsyncLangchainCallbackHandler()
     res = await chain.ainvoke(message.content, callbacks=[cb])
+
     answer = res["answer"]
     source_documents = res["source_documents"]
 
-    # Save sources for the question
-    metadata = load_metadata()
-    question_index = len(metadata["questions"]) + 1
-    source_files = []
+    # Save and respond with the answer (existing functionality)
+    chat_folder = Path(metadata["chats"][chat_index]["folder"])
+    answer_file = chat_folder / f"answer_{len(metadata['chats'][chat_index]['questions']) + 1}.txt"
+    answer_file.write_text(answer)
 
-    if source_documents:
-        for source_idx, source_doc in enumerate(source_documents):
-            source_file = SOURCE_DIR / f"source_{question_index}_{source_idx}.txt"
-            source_file.write_text(source_doc.page_content)
-            source_files.append(str(source_file))
-
-    metadata["questions"][question_index] = {"question": message.content, "sources": source_files}
+    metadata["chats"][chat_index]["questions"].append({
+        "question": message.content,
+        "answer_file": str(answer_file),
+    })
     save_metadata(metadata)
 
-    # Format response
-    text_elements = [cl.Text(content=Path(src).read_text(), name=f"source_{idx}") for idx, src in enumerate(source_files)]
-    source_names = [text_el.name for text_el in text_elements]
-
-    if source_names:
-        answer += f"\nSources: {', '.join(source_names)}"
-    else:
-        answer += "\nNo sources found"
-
-    await cl.Message(content=answer, elements=text_elements).send()
-
-@cl.on_stop
-def on_stop():
-    print("The user wants to stop the task!")
+    sources_text = "\n".join(f"- {Path(doc.metadata['source']).name}" for doc in source_documents)
+    await cl.Message(content=f"{answer}\n\nSources:\n{sources_text}").send()
 
 @cl.on_chat_end
-def on_chat_end():
-    print("The user disconnected!")  
+async def on_chat_end():
+    """Handle the end of a chat session."""
+    print("The user disconnected!")
+    await cl.Message(content="Chat ended. You can start a new chat by typing a message or reloading the page.").send()
