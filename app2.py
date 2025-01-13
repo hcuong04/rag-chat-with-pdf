@@ -168,11 +168,11 @@ async def prompt_for_file(chat_index):
     metadata["files"][file.name] = {"file_name": file.name}
     save_metadata(metadata)
 
-    # Update the chain with the newly added file chunks
-    cl.user_session.set("chain", setup_chain())
-
     # Inform the user
     await cl.Message(content=f"File `{file.name}` uploaded and processed successfully.").send()
+
+    # Update the chain with the newly added file chunks
+    cl.user_session.set("chain", setup_chain())    
 
 @cl.on_message
 async def main(message: cl.Message):
