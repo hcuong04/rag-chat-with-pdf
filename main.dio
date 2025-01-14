@@ -1,50 +1,50 @@
 <mxfile host="65bd71144e">
     <diagram id="TDo9Md2Y0d-92WFa0ves" name="Page-1">
-        <mxGraphModel dx="1207" dy="504" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+        <mxGraphModel dx="1147" dy="580" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="4" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="2" target="3">
+                <mxCell id="4" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="2" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="2" value="cl.on_start" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                <mxCell id="2" value="cl.on_start" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
                     <mxGeometry x="763" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="10" value="" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="3" target="13">
+                <mxCell id="10" value="" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="3" target="13" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="823" y="210" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="3" value="load markdown and metadata" style="whiteSpace=wrap;html=1;rounded=1;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                <mxCell id="3" value="load markdown and metadata" style="whiteSpace=wrap;html=1;rounded=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
                     <mxGeometry x="763" y="100" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="13" target="14">
+                <mxCell id="15" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="13" target="14" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="25" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" connectable="0" parent="15">
-                    <mxGeometry x="-0.0273" relative="1" as="geometry">
-                        <mxPoint as="offset"/>
+                <mxCell id="64" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;fontFamily=Architects Daughter;" vertex="1" connectable="0" parent="15">
+                    <mxGeometry x="0.025" y="1" relative="1" as="geometry">
+                        <mxPoint y="1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="17" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="13" target="16">
+                <mxCell id="17" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="13" target="16" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="26" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" connectable="0" parent="17">
-                    <mxGeometry x="-0.4182" y="2" relative="1" as="geometry">
-                        <mxPoint x="-2" as="offset"/>
+                <mxCell id="65" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;fontFamily=Architects Daughter;" vertex="1" connectable="0" parent="17">
+                    <mxGeometry x="-0.0761" y="1" relative="1" as="geometry">
+                        <mxPoint y="1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="13" value="Search for file data" style="rhombus;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
+                <mxCell id="13" value="Search for file data" style="rhombus;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="763" y="200" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="27" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="14" target="16">
+                <mxCell id="27" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="14" target="16" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="1023" y="350"/>
+                            <mxPoint x="1023" y="402"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="54" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="14" target="47">
+                <mxCell id="54" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="14" target="47" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1023" y="140"/>
@@ -52,32 +52,32 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="14" value="Prompt for file" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
+                <mxCell id="14" value="Prompt for file" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="963" y="210" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="56" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="16" target="55">
+                <mxCell id="56" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="16" target="55" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" value="Set up chain" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
-                    <mxGeometry x="763" y="320" width="120" height="60" as="geometry"/>
+                <mxCell id="16" value="Set up chain" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="763" y="372" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="16" target="20">
+                <mxCell id="21" value="" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="16" target="20" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="823" y="480" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="23" value="" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="20" target="24">
+                <mxCell id="23" value="" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="20" target="24" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="823" y="620" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="46" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="20" target="45">
+                <mxCell id="46" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="20" target="45" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="cl.on_message" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
+                <mxCell id="20" value="cl.on_message" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="763" y="524.5" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="28" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="24" target="14">
+                <mxCell id="28" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="24" target="14" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1120" y="670"/>
@@ -85,109 +85,109 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="29" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" connectable="0" parent="28">
-                    <mxGeometry x="0.0596" y="-1" relative="1" as="geometry">
+                <mxCell id="62" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;fontFamily=Architects Daughter;" vertex="1" connectable="0" parent="28">
+                    <mxGeometry x="0.3409" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="31" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="24" target="30">
+                <mxCell id="31" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="24" target="30" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="44" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" connectable="0" parent="31">
-                    <mxGeometry x="-0.395" relative="1" as="geometry">
-                        <mxPoint y="5" as="offset"/>
+                <mxCell id="63" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;fontFamily=Architects Daughter;" vertex="1" connectable="0" parent="31">
+                    <mxGeometry x="-0.34" y="1" relative="1" as="geometry">
+                        <mxPoint y="1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="24" value="User wants to upload file" style="rhombus;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
+                <mxCell id="24" value="User wants to upload file" style="rhombus;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="763" y="630" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="33" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="30" target="32">
+                <mxCell id="33" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="30" target="32" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="30" value="Process Query" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
-                    <mxGeometry x="763" y="760" width="120" height="60" as="geometry"/>
+                <mxCell id="30" value="Process Query" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="763" y="768" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="35" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="32" target="34">
+                <mxCell id="35" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="32" target="34" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="32" value="Save answer" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
-                    <mxGeometry x="763" y="870" width="120" height="60" as="geometry"/>
+                <mxCell id="32" value="Save answer" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="765" y="877" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="36" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="34" target="20">
+                <mxCell id="36" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="37" target="20" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="570" y="550" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="570" y="1010"/>
+                            <mxPoint x="570" y="1137"/>
                             <mxPoint x="570" y="555"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="38" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="34" target="37">
+                <mxCell id="60" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;fontFamily=Architects Daughter;" vertex="1" connectable="0" parent="36">
+                    <mxGeometry x="0.0354" y="4" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="38" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="34" target="37" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="34" value="Output" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
-                    <mxGeometry x="764" y="980" width="120" height="60" as="geometry"/>
+                <mxCell id="34" value="Output" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="763" y="994" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="39" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="37" target="2">
+                <mxCell id="39" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;sketch=1;curveFitting=1;jiggle=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="40" target="2" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="1190" y="1010"/>
+                            <mxPoint x="1187" y="1139"/>
                             <mxPoint x="1190" y="520"/>
                             <mxPoint x="1190" y="30"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="43" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" connectable="0" parent="39">
-                    <mxGeometry x="-0.1722" y="-1" relative="1" as="geometry">
-                        <mxPoint as="offset"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="41" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="37" target="40">
+                <mxCell id="41" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="37" target="40" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="42" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" connectable="0" parent="41">
-                    <mxGeometry x="-0.2514" relative="1" as="geometry">
-                        <mxPoint as="offset"/>
+                <mxCell id="61" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;fontFamily=Architects Daughter;" vertex="1" connectable="0" parent="41">
+                    <mxGeometry x="0.1078" y="2" relative="1" as="geometry">
+                        <mxPoint x="1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="37" value="New chat" style="rhombus;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
-                    <mxGeometry x="983" y="970" width="107" height="80" as="geometry"/>
+                <mxCell id="37" value="New chat" style="rhombus;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="769.5" y="1099" width="107" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="40" value="cl.end_chat" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
-                    <mxGeometry x="976.5" y="1100" width="120" height="60" as="geometry"/>
+                <mxCell id="40" value="cl.end_chat" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="1011" y="1109" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="45" value="Chat history + memory" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
+                <mxCell id="45" value="Chat history + memory" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="963" y="525" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="49" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="47" target="48">
+                <mxCell id="49" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="47" target="48" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="47" value="Upload a file" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                <mxCell id="47" value="Upload a file" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
                     <mxGeometry x="1290" y="210" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="51" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="48" target="50">
+                <mxCell id="51" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="48" target="50" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="48" value="Extract text" style="whiteSpace=wrap;html=1;rounded=1;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                <mxCell id="48" value="Extract text" style="whiteSpace=wrap;html=1;rounded=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
                     <mxGeometry x="1290" y="320" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="53" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="50" target="52">
+                <mxCell id="53" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="50" target="52" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="50" value="Create chunks" style="whiteSpace=wrap;html=1;rounded=1;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                <mxCell id="50" value="Create chunks" style="whiteSpace=wrap;html=1;rounded=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
                     <mxGeometry x="1290" y="430" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="52" value="Save into metadata" style="whiteSpace=wrap;html=1;rounded=1;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                <mxCell id="52" value="Save into metadata" style="whiteSpace=wrap;html=1;rounded=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
                     <mxGeometry x="1290" y="540" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="58" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="55" target="57">
+                <mxCell id="58" value="" style="edgeStyle=none;html=1;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="55" target="57" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="55" value="Load metadata, load chunk files" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
-                    <mxGeometry x="540" y="320" width="120" height="60" as="geometry"/>
+                <mxCell id="55" value="Load metadata, load chunk files" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="552" y="372" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="57" value="Load model, embeded and search" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" vertex="1" parent="1">
-                    <mxGeometry x="340" y="320" width="120" height="60" as="geometry"/>
+                <mxCell id="57" value="Load model, embeded and search" style="whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="341" y="372" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
